@@ -3,9 +3,11 @@ import '../css/app.css'
 import { createInertiaApp } from '@inertiajs/react'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createRoot } from 'react-dom/client'
+import { route as routeFn} from 'ziggy-js'
 
 // ประกาศ type สำหรับ Vite
 declare global {
+  const route: typeof routeFn
   interface ImportMetaEnv {
     VITE_APP_NAME?: string
   }

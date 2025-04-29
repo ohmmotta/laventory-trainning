@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, Head } from '@inertiajs/react'
 
-export default function Welcome() {
+interface WelcomeProps {
+  auth: {
+    user: any
+  }
+}
+
+export default function Welcome({auth}:WelcomeProps) {
 
   // สร้างตัวแปรสำหรับกำหนด dark mode
   const [darkMode, setDarkMode] = useState(false)
@@ -53,7 +59,7 @@ export default function Welcome() {
         <nav className="fixed top-0 left-0 right-0 p-4 w-full z-10 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
           <div className="flex justify-between max-w-6xl mx-auto">
             <div className="flex items-center">
-              <Link href="/" className="flex items-center gap-2">
+              <Link href={route('welcome')} className="flex items-center gap-2">
                 <img src="/static/logo.svg" width="110" height="32" alt="IMS-Thai" className="h-8" />
               </Link>
             </div>
@@ -61,20 +67,31 @@ export default function Welcome() {
             <div className="flex items-center gap-2">
 
                 {/* ลิงก์เข้าสู่ระบบ/ลงทะเบียน */}
-                  <Link
-                    href="/login"
+                <div className="flex items-center gap-2">
+                {auth.user ? (
+                <Link
+                    href={route('dashboard')}
                     className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
-                  >
+                >
+                  แดชบอร์ด
+                </Link>
+                ) : (
+                <>
+                    <Link
+                    href={route('login')}
+                    className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+                    >
                     เข้าสู่ระบบ
-                  </Link>
-                  <Link
-                      href="/register"
-                      className="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md transition-colors"
-                  >
-                    ลงทะเบียน
-                  </Link>
-                  
-            </div>
+                    </Link>
+                    <Link
+                        href={route('register')}
+                        className="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md transition-colors"
+                    >
+                      ลงทะเบียน
+                    </Link>
+                </>
+                )}
+                </div>
                 
               {/* Dark mode toggle */}
               <button 
@@ -94,6 +111,7 @@ export default function Welcome() {
               </button>
 
             </div>
+          </div>
         </nav>
 
         {/* Main Content */}
